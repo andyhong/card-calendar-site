@@ -1,7 +1,44 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import fetch from 'isomorphic-unfetch'
+import { useTable } from 'react-table'
+import { useMemo } from 'react'
 
-export default function Home() {
+const Home = ({ cards }) => {
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name"
+      },
+      {
+        Header: "Release Date",
+        accessor: "release_date"
+      },
+      {
+        Header: "Category",
+        accessor: "category"
+      },
+    ],
+    []
+  )
+
+  const data = useMemo(
+    () => cards,
+    []
+  )
+
+  const tableInstance = useTable({ columns, data })
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = tableInstance
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,43 +48,43 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Tempest Cards
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Currently tracking {cards.length} sets
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableProps()}>
+            {rows.map(row => {
+              prepareRow(row)
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                      </td>
+                    )
+                    })}
+                </tr>
+              )
+                  })}
+          </tbody>
+        </table>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
       </main>
 
       <footer className={styles.footer}>
@@ -63,3 +100,15 @@ export default function Home() {
     </div>
   )
 }
+
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/cards")
+  const cards = await res.json()
+  return {
+    props: {
+      cards,
+    }
+  }
+}
+
+export default Home

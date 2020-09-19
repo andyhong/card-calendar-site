@@ -8,8 +8,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "isomorphic-unfetch": "^3.0.0",
+    "mongodb": "^3.6.2",
     "next": "9.5.3",
+    "next-connect": "^0.9.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-table": "^7.5.1"
   }
 }
