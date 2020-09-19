@@ -101,8 +101,8 @@ const Home = ({ cards }) => {
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/cards")
+export async function getServerSideProps(context) {
+  const res = await fetch("https://card-calendar-site.vercel.app/api/cards")
   const cards = await res.json()
   return {
     props: {
