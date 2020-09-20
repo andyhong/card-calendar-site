@@ -7,6 +7,7 @@ import { useMemo } from 'react'
 const Home = ({ cards }) => {
 
   const withEmojis = cards.map(card => {
+
     const categories = {
       baseball: "⚾",
       basketball: "🏀",
@@ -17,21 +18,24 @@ const Home = ({ cards }) => {
       non_sport: "❓"
     }
 
-    return {...card, emoji: categories[card.category]}
-  })
+    return {...card, date: new Date(card.release_date), emoji: `${categories[card.category]}   ${card.name}`}
+  }).sort((a, b) => a.date - b.date)
 
   const colStyle = {
     textAlign: "center",
     marginLeft: "1rem",
     marginRight: "1rem",
-    maxWidth: "300px",
+    maxWidth: "350px",
+    whiteSpace: "pre",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
   }
 
   const columns = useMemo(
     () => [
       {
-        Header: () => <div style={{...colStyle, textAlign: "left"}}>Name</div>,
-        accessor: "name",
+        Header: () => <div style={colStyle}>Set Name</div>,
+        accessor: "emoji",
         Cell: row => <div style={{...colStyle, textAlign: "left"}}>{row.value}</div>,
       },
       {
@@ -39,11 +43,11 @@ const Home = ({ cards }) => {
         accessor: "release_date",
         Cell: row => <div style={colStyle}>{row.value}</div>
       },
-      {
-        Header: <div style={colStyle}>Category</div>,
-        accessor: "emoji",
-        Cell: row => <div style={colStyle}>{row.value}</div>
-      },
+      // {
+      //   Header: <div style={colStyle}>Category</div>,
+      //   accessor: "emoji",
+      //   Cell: row => <div style={colStyle}>{row.value}</div>
+      // },
     ],
     []
   )
