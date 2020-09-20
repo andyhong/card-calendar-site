@@ -6,26 +6,50 @@ import { useMemo } from 'react'
 
 const Home = ({ cards }) => {
 
+  const withEmojis = cards.map(card => {
+    const categories = {
+      baseball: "⚾",
+      basketball: "🏀",
+      football: "🏈",
+      hockey: "🏒",
+      other_sports: "❓",
+      gaming: "🎮",
+      non_sport: "❓"
+    }
+
+    return {...card, emoji: categories[card.category]}
+  })
+
+  const colStyle = {
+    textAlign: "center",
+    marginLeft: "1rem",
+    marginRight: "1rem",
+    maxWidth: "300px",
+  }
+
   const columns = useMemo(
     () => [
       {
-        Header: "Name",
-        accessor: "name"
+        Header: () => <div style={{...colStyle, textAlign: "left"}}>Name</div>,
+        accessor: "name",
+        Cell: row => <div style={{...colStyle, textAlign: "left"}}>{row.value}</div>,
       },
       {
-        Header: "Release Date",
-        accessor: "release_date"
+        Header: <div style={colStyle}>Release Date</div>,
+        accessor: "release_date",
+        Cell: row => <div style={colStyle}>{row.value}</div>
       },
       {
-        Header: "Category",
-        accessor: "category"
+        Header: <div style={colStyle}>Category</div>,
+        accessor: "emoji",
+        Cell: row => <div style={colStyle}>{row.value}</div>
       },
     ],
     []
   )
 
   const data = useMemo(
-    () => cards,
+    () => withEmojis,
     []
   )
 
@@ -101,8 +125,9 @@ const Home = ({ cards }) => {
   )
 }
 
-export async function getServerSideProps(context) {
-  const res = await fetch("https://card-calendar-site.vercel.app/api/cards")
+export async function getServerSideProps() {
+  const HOSTNAME = process.env.HOSTNAME || "https://card-calendar-site.vercel.app/"
+  const res = await fetch(`${HOSTNAME}api/cards/`)
   const cards = await res.json()
   return {
     props: {
