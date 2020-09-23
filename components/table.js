@@ -4,12 +4,7 @@ import { useMemo } from 'react'
 const Table = (props) => {
   const colStyle = {
     textAlign: "center",
-    marginLeft: "1rem",
-    marginRight: "1rem",
-    maxWidth: "350px",
     whiteSpace: "pre-wrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis"
   }
 
   const columns = useMemo(
@@ -22,13 +17,8 @@ const Table = (props) => {
       {
         Header: <div style={colStyle}>Release Date</div>,
         accessor: "release_date",
-        Cell: row => <div style={colStyle}>{row.value}</div>
+        Cell: row => <div style={{...colStyle, margin: "0 1rem"}}>{row.value}</div>
       },
-      // {
-      //   Header: <div style={colStyle}>Category</div>,
-      //   accessor: "emoji",
-      //   Cell: row => <div style={colStyle}>{row.value}</div>
-      // },
     ],
     []
   )

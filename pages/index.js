@@ -18,22 +18,22 @@ const Home = ({cards}) => {
     }
 
     return {...card, date: new Date(card.release_date), emoji: `${categories[card.category]}  ${card.name}`}
-  }).sort((a, b) => a.date - b.date)
+  }).filter(card => card.date > Date.now()).sort((a, b) => a.date - b.date)
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Tempest Cards Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Tempest Cards
+          Tempest Cards <br /> Calendar
         </h1>
 
         <p className={styles.description}>
-          Currently tracking {cards.length} sets
+          Currently tracking <strong>{withEmojis.length}</strong> sets
         </p>
 
         <Table data={withEmojis} />
