@@ -12,9 +12,9 @@ const Home = ({cards}) => {
       basketball: "🏀",
       football: "🏈",
       hockey: "🏒",
-      other_sports: "❓",
+      other_sports: "🃏",
       gaming: "🎮",
-      non_sport: "❓"
+      non_sport: "🃏"
     }
 
     return {...card, date: new Date(card.release_date), emoji: `${categories[card.category]}  ${card.name}`}

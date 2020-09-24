@@ -17,7 +17,7 @@ const Table = (props) => {
       {
         Header: <div style={colStyle}>Release Date</div>,
         accessor: "release_date",
-        Cell: row => <div style={{...colStyle, margin: "0 1rem"}}>{row.value}</div>
+        Cell: row => <div style={{...colStyle, margin: ".25rem 1rem"}}>{row.value}</div>
       },
     ],
     []
