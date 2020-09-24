@@ -24,10 +24,13 @@ const Home = ({cards}) => {
     <div className={styles.container}>
       <Head>
         <title>Tempest Cards Calendar</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/tempest-cards-logo.png" />
       </Head>
 
       <main className={styles.main}>
+        <div className={styles.mainlogo}>
+          <img src="/tempest-cards-logo.png" alt="Tempest Cards logo" width="150"></img>
+        </div>
         <h1 className={styles.title}>
           Tempest Cards <br /> Calendar
         </h1>
