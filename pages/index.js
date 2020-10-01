@@ -29,7 +29,9 @@ const Home = ({cards}) => {
 
       <main className={styles.main}>
         <div className={styles.mainlogo}>
-          <img src="/tempest-cards-logo.png" alt="Tempest Cards logo" width="150"></img>
+          <img src="/tempest-cards-logo.png" alt="Tempest Cards logo" width="180"></img>
+          <div className={styles.vl}></div>
+          <img src="/ihof-logo.png" alt="IHOF logo" width="180"></img>
         </div>
         <h1 className={styles.title}>
           Tempest Cards <br /> Calendar

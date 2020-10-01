@@ -19,6 +19,18 @@
 
 .mainlogo {
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.vl {
+  border: 2px solid #000;
+  height: 150px;
+  margin: 0 1rem;
+}
+
+.mainlogo img {
+  padding: 0.75rem;
 }
 
 .footer {
